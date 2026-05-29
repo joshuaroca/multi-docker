@@ -10,8 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker build -t rallycoding/react-test -f ./client/Dockerfile.dev ./client
-      - run: docker run -e CI=true rallycoding/react-test npm test
+      - run: docker build -t joshuaeroca/react-test -f ./client/Dockerfile.dev ./client
+      - run: docker run -e CI=true joshuaeroca/react-test npm test
 
       - run: docker build -t joshuaeroca/multi-client ./client
       - run: docker build -t joshuaeroca/multi-nginx ./nginx
