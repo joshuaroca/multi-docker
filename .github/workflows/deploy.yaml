@@ -38,6 +38,10 @@ jobs:
       - name: Test S3 Upload
         run: |
           aws s3 cp deploy.zip s3://elasticbeanstalk-us-east-1-690167397397/test-deploy.zip
+      - name: Verify Elastic Beanstalk
+        run: |
+          aws elasticbeanstalk describe-applications --application-names multi-docker
+          aws elasticbeanstalk describe-environments --environment-names Multi-docker-env
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v22
