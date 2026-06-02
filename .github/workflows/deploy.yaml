@@ -35,6 +35,9 @@ jobs:
 
       - name: Verify Identity
         run: aws sts get-caller-identity
+      - name: Test S3 Upload
+        run: |
+          aws s3 cp deploy.zip s3://elasticbeanstalk-us-east-1-690167397397/test-deploy.zip
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v22
