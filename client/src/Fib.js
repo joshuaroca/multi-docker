@@ -13,7 +13,7 @@ export default function Fib() {
 
   const fetchValues = async () => {
     const response = await axios.get("/api/values/current");
-    setValues(response.data);
+    setValues(response.data || {});
   };
 
   const fetchIndexes = async () => {

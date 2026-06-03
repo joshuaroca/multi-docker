@@ -63,9 +63,21 @@ app.post("/values", async (req, res) => {
     return res.status(422).send("Index too high");
   }
 
-  redisClient.hset("values", index, "Nothing yet!");
-  redisPublisher.publish("insert", index);
-  pgClient.query("INSERT INTO values(number) VALUES($1)", [index]);
+  await new Promise((resolve, reject) => {
+    redisClient.hset("values", index, "Nothing yet!", (err) => {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
+
+  await new Promise((resolve, reject) => {
+    redisPublisher.publish("insert", index, (err) => {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
+
+  await pgClient.query("INSERT INTO values(number) VALUES($1)", [index]);
 
   res.send({ working: true });
 });
